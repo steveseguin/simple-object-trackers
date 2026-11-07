@@ -45,6 +45,9 @@ class CMT(object):
 		background_keypoints_cv = list(itertools.compress(keypoints_cv, ~ind))
 		background_keypoints_cv, background_features = self.descriptor.compute(im_gray0, background_keypoints_cv)
 		_ = util.keypoints_cv_to_np(background_keypoints_cv)
+		if background_features is None:
+			background_features = np.empty((0, self.selected_features.shape[1]),
+				dtype=self.selected_features.dtype)
 
 		# Assign each keypoint a class starting from 1, background is 0
 		self.selected_classes = array(range(num_selected_keypoints)) + 1
